@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ResultController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">gs-consuming-rest</a> &gt; <a href="index.source.html" class="el_package">resultApp</a> &gt; <span class="el_source">ResultController.java</span></div><h1>ResultController.java</h1><pre class="source lang-java linenums">package resultApp;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+@RestController
+<span class="fc" id="L12">public class ResultController {</span>
+    
+<span class="fc" id="L14">    private static final Logger log = LoggerFactory.getLogger(Application.class);</span>
+
+    private String resultString;
+
+<span class="fc" id="L18">    @Autowired</span>
+    public ResultService resultService = new ResultService();
+    
+	public RestTemplate restTemplate(RestTemplateBuilder builder) {
+<span class="nc" id="L22">		return builder.build();</span>
+	}
+
+    @RequestMapping(&quot;/get&quot;)
+    public void getResult(RestTemplate restTemplate) throws Exception {
+<span class="nc" id="L27">		Result result = restTemplate.getForObject( //full -&gt; &quot;https://rl003vo1kj.execute-api.us-east-1.amazonaws.com/devo?magenicKey=larryl&amp;input=%26asdfasdfsa=fraggelrock%2limit=10%26offset=20%26sort=date_asc</span>
+				&quot;https://rl003vo1kj.execute-api.us-east-1.amazonaws.com/devo?magenicKey=larryl&quot;, Result.class);
+<span class="nc" id="L29">        resultString = result.toString();</span>
+<span class="nc" id="L30">        log.info(resultString);</span>
+<span class="nc" id="L31">		resultService.addResult(result);</span>
+<span class="nc" id="L32">    }</span>
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

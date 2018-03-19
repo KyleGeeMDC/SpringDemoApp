@@ -1,0 +1,5 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+gs-consuming-rest,resultApp,ResultService,6,3,0,0,2,1,1,1,1,1
+gs-consuming-rest,resultApp,Result,12,26,0,0,1,12,1,6,1,6
+gs-consuming-rest,resultApp,ResultController,24,12,0,0,6,3,2,2,2,2
+gs-consuming-rest,resultApp,Application,0,8,0,0,0,3,0,2,0,2
