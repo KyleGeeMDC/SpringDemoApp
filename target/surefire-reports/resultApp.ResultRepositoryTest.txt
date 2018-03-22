@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: resultApp.ResultRepositoryTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 5.668 sec <<< FAILURE! - in resultApp.ResultRepositoryTest
+saveAndRetreiveResult(resultApp.ResultRepositoryTest)  Time elapsed: 0.081 sec  <<< ERROR!
+java.lang.NullPointerException: null
+	at resultApp.ResultRepositoryTest.saveAndRetreiveResult(ResultRepositoryTest.java:30)
+

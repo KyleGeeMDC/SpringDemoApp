@@ -1,35 +1,111 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ResultController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">gs-consuming-rest</a> &gt; <a href="index.source.html" class="el_package">resultApp</a> &gt; <span class="el_source">ResultController.java</span></div><h1>ResultController.java</h1><pre class="source lang-java linenums">package resultApp;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ResultController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">result-app</a> &gt; <a href="index.source.html" class="el_package">resultApp</a> &gt; <span class="el_source">ResultController.java</span></div><h1>ResultController.java</h1><pre class="source lang-java linenums">package resultApp;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.beans.factory.InjectionPoint;
+
+import javax.ws.rs.DefaultValue;
+import javax.ws.rs.QueryParam;
 
 @RestController
-<span class="fc" id="L12">public class ResultController {</span>
+<span class="fc" id="L20">public class ResultController {</span>
+
+
+<span class="fc" id="L23">    @Autowired</span>
+    public ResultService resultService = new ResultService();
+
+    @Bean
+    @Scope(&quot;prototype&quot;)
+    Logger logger(InjectionPoint injectionPoint){
+<span class="fc" id="L29">        return LoggerFactory.getLogger(injectionPoint.getMethodParameter().getContainingClass());</span>
+    }
+
+    private Logger logger;
+
+    @Autowired
+    public void setLogger(Logger logger) {
+<span class="fc" id="L36">        this.logger = logger;</span>
+<span class="fc" id="L37">    }</span>
     
-<span class="fc" id="L14">    private static final Logger log = LoggerFactory.getLogger(Application.class);</span>
+    //private static final Logger log = LoggerFactory.getLogger(Application.class);
 
     private String resultString;
 
-<span class="fc" id="L18">    @Autowired</span>
-    public ResultService resultService = new ResultService();
     
 	public RestTemplate restTemplate(RestTemplateBuilder builder) {
-<span class="nc" id="L22">		return builder.build();</span>
+<span class="nc" id="L45">		return builder.build();</span>
 	}
 
+    @RequestMapping(&quot;/result&quot;)
+    public void getResult(RestTemplate restTemplate) throws Exception {
+        //log.info(&quot;Now retrieving result...&quot;);
+<span class="nc" id="L51">        logger.info(&quot;Now retrieving result...&quot;);</span>
+<span class="nc" id="L52">		Result result = restTemplate.getForObject( //full -&gt; &quot;https://rl003vo1kj.execute-api.us-east-1.amazonaws.com/devo?magenicKey=larryl&amp;input=%26asdfasdfsa=fraggelrock%2limit=10%26offset=20%26sort=date_asc</span>
+				&quot;https://rl003vo1kj.execute-api.us-east-1.amazonaws.com/devo?magenicKey=larryl&quot;, Result.class);
+<span class="nc" id="L54">        resultString = result.toString();</span>
+        //log.info(resultString);
+<span class="nc" id="L56">        logger.info(resultString);</span>
+<span class="nc" id="L57">		resultService.addResult(result);</span>
+<span class="nc" id="L58">    }</span>
+    
+    @RequestMapping(method=RequestMethod.POST, value = &quot;/params&quot;)
+    public void getResultParams(RestTemplate restTemplate,
+                                //@QueryParam(&quot;magenicKey&quot;) @DefaultValue(&quot;larryl&quot;) String magenicKey,
+                                //@QueryParam(value = &quot;asdfasdfsa&quot;) @DefaultValue(&quot;&quot;) String asdfasdfsa,
+                                //@QueryParam(&quot;limit&quot;) @DefaultValue(&quot;&quot;) String limit,
+                                //@QueryParam(&quot;offset&quot;) @DefaultValue(&quot;&quot;) String offset,
+                                //@QueryParam(&quot;sort&quot;) @DefaultValue(&quot;&quot;) String sort
+
+                                @RequestParam(value=&quot;magenicKey&quot;, required=false, defaultValue=&quot;larryl&quot;) String magenicKey,
+                                @RequestParam(value=&quot;asdfasdfsa&quot;, required=false, defaultValue=&quot;&quot;) String asdfasdfsa,
+                                @RequestParam(value=&quot;limit&quot;, required=false, defaultValue=&quot;&quot;) String limit,
+                                @RequestParam(value=&quot;offset&quot;, required=false, defaultValue=&quot;&quot;) String offset,
+                                @RequestParam(value=&quot;sort&quot;, required=false, defaultValue=&quot;&quot;) String sort
+                                ) throws Exception {
+
+        // log.info(&quot;Now retrieving result from query...&quot;);
+        // log.info(&quot;MagenicKey: &quot; + magenicKey);
+        // log.info(&quot;asdfasdfsa: &quot; + asdfasdfsa);
+        // log.info(&quot;limit: &quot; + limit);
+        // log.info(&quot;offsest: &quot; + offset);
+        // log.info(&quot;sort: &quot; + sort);
+        
+<span class="nc" id="L82">        logger.info(&quot;Now retrieving result from query...&quot;);</span>
+<span class="nc" id="L83">        logger.info(&quot;MagenicKey: &quot; + magenicKey);</span>
+<span class="nc" id="L84">        logger.info(&quot;asdfasdfsa: &quot; + asdfasdfsa);</span>
+<span class="nc" id="L85">        logger.info(&quot;limit: &quot; + limit);</span>
+<span class="nc" id="L86">        logger.info(&quot;offsest: &quot; + offset);</span>
+<span class="nc" id="L87">        logger.info(&quot;sort: &quot; + sort);</span>
+
+<span class="nc" id="L89">        String resultPath = &quot;https://rl003vo1kj.execute-api.us-east-1.amazonaws.com/devo?magenicKey=&quot; + magenicKey + &quot;&amp;input=%26&quot; + asdfasdfsa + &quot;=fraggelrock%252limit=&quot; + limit + &quot;%26offset=&quot; + offset + &quot;%26sort=&quot; + sort + &quot;%20&quot;;</span>
+
+<span class="nc" id="L91">		Result result = restTemplate.getForObject(resultPath, Result.class);</span>
+<span class="nc" id="L92">        resultString = result.toString();</span>
+        //log.info();
+<span class="nc" id="L94">        logger.info(resultString);</span>
+<span class="nc" id="L95">		resultService.addResult(result);</span>
+<span class="nc" id="L96">    }</span>
+
+    /*
     @RequestMapping(&quot;/get&quot;)
     public void getResult(RestTemplate restTemplate) throws Exception {
-<span class="nc" id="L27">		Result result = restTemplate.getForObject( //full -&gt; &quot;https://rl003vo1kj.execute-api.us-east-1.amazonaws.com/devo?magenicKey=larryl&amp;input=%26asdfasdfsa=fraggelrock%2limit=10%26offset=20%26sort=date_asc</span>
+        log.info(&quot;Now retrieving result...&quot;);
+		Result result = restTemplate.getForObject( //full -&gt; &quot;https://rl003vo1kj.execute-api.us-east-1.amazonaws.com/devo?magenicKey=larryl&amp;input=%26asdfasdfsa=fraggelrock%2limit=10%26offset=20%26sort=date_asc
 				&quot;https://rl003vo1kj.execute-api.us-east-1.amazonaws.com/devo?magenicKey=larryl&quot;, Result.class);
-<span class="nc" id="L29">        resultString = result.toString();</span>
-<span class="nc" id="L30">        log.info(resultString);</span>
-<span class="nc" id="L31">		resultService.addResult(result);</span>
-<span class="nc" id="L32">    }</span>
+        resultString = result.toString();
+        log.info(resultString);
+		resultService.addResult(result);
+
+    */
 }
 
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>
