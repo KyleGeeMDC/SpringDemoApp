@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ResultService {
+public class ResultService implements ResultServiceInterface{
     
     @Autowired
     private ResultRepository resultRepository;

@@ -10,8 +10,6 @@ public interface ResultRepository extends CrudRepository<Result, String>{
 
 	Optional<Result> findById(String string);
 
-	//void save(Boolean result);
-
 	//void save(String result);
 
 }
