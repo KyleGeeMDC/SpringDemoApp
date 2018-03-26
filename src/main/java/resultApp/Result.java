@@ -57,4 +57,4 @@ public class Result implements Serializable{
         throws java.io.IOException, ClassNotFoundException{
             stream.defaultReadObject();
     }
-    }
+}

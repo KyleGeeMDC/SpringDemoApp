@@ -16,8 +16,6 @@ public class ResultService implements ResultServiceInterface{
     }
 
     public Optional<Result> getResultById(Long id){
-        return resultRepository.findById(id.toString());
+        return resultRepository.findById(id);
     }
-    
-
 }

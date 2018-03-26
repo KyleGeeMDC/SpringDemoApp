@@ -8,8 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ResultRepository extends CrudRepository<Result, String>{
 
-	Optional<Result> findById(String string);
-
-	//void save(String result);
+	Optional<Result> findById(Long id);
 
 }

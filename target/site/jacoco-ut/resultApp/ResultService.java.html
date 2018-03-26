@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-<span class="fc" id="L9">public class ResultService {</span>
+<span class="fc" id="L9">public class ResultService implements ResultServiceInterface{</span>
     
     @Autowired
     private ResultRepository resultRepository;
@@ -16,9 +16,7 @@ import org.springframework.stereotype.Service;
 <span class="nc" id="L16">    }</span>
 
     public Optional&lt;Result&gt; getResultById(Long id){
-<span class="nc" id="L19">        return resultRepository.findById(id.toString());</span>
+<span class="nc" id="L19">        return resultRepository.findById(id);</span>
     }
-    
-
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>
