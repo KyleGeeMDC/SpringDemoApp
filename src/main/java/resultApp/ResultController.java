@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 //import javax.ws.rs.core.Context;
 //import javax.ws.rs.core.MultivaluedMap;
 //import javax.ws.rs.core.UriInfo;
-import javax.websocket.server.PathParam;
 
 @RestController
 public class ResultController {

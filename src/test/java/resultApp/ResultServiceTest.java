@@ -48,6 +48,5 @@ public class ResultServiceTest{
         verify(resultService, times(1)).exists(anyString());
 
 	}
-
-*/
 }
+*/
