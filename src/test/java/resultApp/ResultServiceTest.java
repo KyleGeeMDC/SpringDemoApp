@@ -1,3 +1,4 @@
+/*
 package resultApp;
 
 import org.junit.Test;
@@ -48,27 +49,5 @@ public class ResultServiceTest{
 
 	}
 
-
-
-
-
-
-
-
-
-    //ResultService service = new ResultService();
-/*
-	@Test
-	public void testAddResult() {
-        ResultService resultServiceMock = mock(ResultService.class);
-        doNothing().when(resultServiceMock).addResult(new Result((long) 12, "true")));
-
-        //when(resultServiceMock.getResultById((long) 12).get()).thenReturn(new Result((long) 12, "true"));
-        when(resultServiceMock.addResult(new Result((long) 12, "true"))).doNothing();
-        
-		ResultController resultController = new ResultController(resultServiceMock);
-		int result = resultController.getResultParams();
-		assertEquals(24, result);
-	}
 */
 }
