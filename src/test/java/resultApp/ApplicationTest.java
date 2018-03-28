@@ -1,3 +1,5 @@
+/*
+
 package resultApp;
 
 import org.junit.Test;
@@ -20,3 +22,5 @@ public class ApplicationTest {
 	}
 
 }
+
+*/

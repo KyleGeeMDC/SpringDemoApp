@@ -1,4 +1,20 @@
 -------------------------------------------------------------------------------
 Test set: resultApp.ApplicationTest
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.429 sec - in resultApp.ApplicationTest
+Tests run: 2, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 7.367 sec <<< FAILURE! - in resultApp.ApplicationTest
+applicationContextTest(resultApp.ApplicationTest)  Time elapsed: 1.541 sec  <<< ERROR!
+org.springframework.boot.web.embedded.tomcat.ConnectorStartFailedException: Connector configured to listen on port 8080 failed to start
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.checkThatConnectorsHaveStarted(TomcatWebServer.java:227)
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.start(TomcatWebServer.java:202)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.startWebServer(ServletWebServerApplicationContext.java:300)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.finishRefresh(ServletWebServerApplicationContext.java:162)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:552)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:140)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:388)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:327)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1246)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1234)
+	at resultApp.Application.main(Application.java:13)
+	at resultApp.ApplicationTest.applicationContextTest(ApplicationTest.java:19)
+

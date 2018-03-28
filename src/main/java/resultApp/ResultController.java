@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 //import javax.ws.rs.core.Context;
 //import javax.ws.rs.core.MultivaluedMap;
 //import javax.ws.rs.core.UriInfo;
+import javax.websocket.server.PathParam;
 
 @RestController
 public class ResultController {
@@ -27,10 +28,22 @@ public class ResultController {
     public UriInfo ui(){
     };
 */
+
+
     @Autowired
-    private final ResultService resultService = new ResultService();
+    private final ResultService resultService; // = new ResultService();
     private final RestTemplate restTemplate = new RestTemplate();
+
+    @Autowired
+    public ResultController(ResultService service) {
+        this.resultService = service;
+    }
+
     
+	public RestTemplate restTemplate(RestTemplateBuilder builder) {
+		return builder.build();
+	}
+
     @Bean
     Logger logger(InjectionPoint injectionPoint){
         return LoggerFactory.getLogger(injectionPoint.getMethodParameter().getContainingClass());
@@ -43,10 +56,6 @@ public class ResultController {
         this.logger = logger;
     }
 
-	public RestTemplate restTemplate(RestTemplateBuilder builder) {
-		return builder.build();
-	}
-
     @RequestMapping(method=RequestMethod.GET, value = "/params")
     public void getResultParams(//@Context UriInfo ui,
                                 HttpServletRequest request
@@ -58,7 +67,7 @@ public class ResultController {
         //MultivaluedMap<String, String> pathParams = ui.getPathParameters();
 
         logger.info(request.getRequestURL().toString()); 
-        logger.info("Retrieving result fromget ResultParams with query: " + queryParams);
+        logger.info("get ResultParams with query: " + queryParams);
 
         String resultPath = "https://rl003vo1kj.execute-api.us-east-1.amazonaws.com/devo?" + queryParams ;
 
@@ -69,6 +78,12 @@ public class ResultController {
         logger.info("result: " + result.toString());
         
         resultService.addResult(result);
+    }
+
+    @RequestMapping(method=RequestMethod.GET, value = "/params/{id}")
+    public void getResultById( Long id
+                                ) throws Exception {                  
+        resultService.getResultById(id);
     }
 }
 
